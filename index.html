@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C# Programming Activities — Gimbert Ludovice, WITMWD3M1, EVENTPRO LEC">
+<title>C# Activities — Gimbert Ludovice | EVENTPRO LEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   EVENTPRO LEC — C# Activity Portfolio (single-file build)
+   Gimbert Ludovice · WITMWD3M1 · Prof. Carlo Batitis
+   ============================================================ */
+:root{
+  --navy:#1B1F3B; --navy-card:#2E3358; --navy-deep:#0E1024;
+  --cream:#F5F3EE; --signal:#E8574A; --brass:#C9A227; --mint:#4FD1A5;
+  --line:rgba(245,243,238,0.14);
+  --f-display:'Bebas Neue',sans-serif;
+  --f-body:'Inter',sans-serif;
+  --f-mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--cream);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+.page{display:none;}
+.page.active{display:block;animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* ---------- progress bar ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--signal),var(--brass));z-index:99;transition:width .3s ease;}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:60;background:rgba(27,31,59,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;gap:20px;}
+.brand-mark{font-family:var(--f-display);font-size:1.5rem;letter-spacing:.08em;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px rgba(232,87,74,.25);animation:pulse 2.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(232,87,74,.25);}50%{box-shadow:0 0 0 7px rgba(232,87,74,.08);}}
+.main-nav{display:flex;gap:6px;font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;}
+.main-nav button{padding:9px 16px;border-radius:3px;color:rgba(245,243,238,.7);transition:all .2s ease;position:relative;}
+.main-nav button:hover{color:var(--cream);background:rgba(245,243,238,.06);}
+.main-nav button.current{color:var(--navy);background:var(--brass);font-weight:600;}
+.nav-cta{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;background:var(--signal);color:var(--cream);padding:10px 18px;border-radius:3px;transition:all .2s ease;white-space:nowrap;}
+.nav-cta:hover{background:#f16a5c;transform:translateY(-1px);}
+.burger{display:none;font-size:1.5rem;padding:4px 10px;}
+
+/* ---------- hero ---------- */
+.hero{padding:88px 32px 72px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--brass);}
+.hero h1{font-family:var(--f-display);font-size:clamp(2.7rem,6vw,4.6rem);line-height:.98;margin-bottom:22px;}
+.hero h1 span{color:var(--signal);}
+.hero .lede{font-size:1.05rem;color:rgba(245,243,238,.78);max-width:470px;margin-bottom:34px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-primary,.btn-ghost{font-family:var(--f-mono);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;padding:15px 26px;border-radius:3px;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease;border:1px solid transparent;}
+.btn-primary{background:var(--signal);color:var(--cream);}
+.btn-primary:hover{background:#f16a5c;transform:translateY(-2px);box-shadow:0 8px 20px -8px rgba(232,87,74,.6);}
+.btn-ghost{border-color:var(--line);}
+.btn-ghost:hover{border-color:var(--brass);transform:translateY(-2px);}
+
+.ticket{background:var(--navy-card);border-radius:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.55);animation:rise .9s cubic-bezier(.16,1,.3,1) both;}
+@keyframes rise{from{opacity:0;transform:translateY(26px) rotate(1.2deg);}to{opacity:1;transform:none;}}
+.ticket-top{padding:28px 30px 24px;border-bottom:1px dashed rgba(245,243,238,.25);position:relative;}
+.ticket-top::before,.ticket-top::after{content:'';position:absolute;width:26px;height:26px;background:var(--navy);border-radius:50%;bottom:-13px;}
+.ticket-top::before{left:-13px;}
+.ticket-top::after{right:-13px;}
+.ticket-label{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:10px;}
+.ticket-event{font-family:var(--f-display);font-size:1.65rem;margin-bottom:18px;}
+.ticket-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;}
+.meta-item .k{font-family:var(--f-mono);font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,238,.5);margin-bottom:3px;}
+.meta-item .v{font-family:var(--f-mono);font-size:.92rem;}
+.ticket-bottom{padding:24px 30px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.barcode{display:flex;gap:3px;align-items:flex-end;height:32px;}
+.barcode span{width:3px;background:var(--brass);opacity:.85;}
+.ticket-status{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(79,209,165,.14);color:var(--mint);padding:7px 14px;border-radius:20px;border:1px solid rgba(79,209,165,.35);}
+
+/* ---------- stats ---------- */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:38px 32px;}
+.stats-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.stat .num{font-family:var(--f-display);font-size:2.3rem;color:var(--brass);line-height:1;}
+.stat .label{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,243,238,.6);margin-top:5px;}
+
+/* ---------- sections ---------- */
+.section{padding:92px 32px;}
+.section-head{max-width:620px;margin-bottom:52px;}
+.section-head h2{font-family:var(--f-display);font-size:clamp(2rem,4vw,2.7rem);margin-bottom:14px;}
+.section-head p{color:rgba(245,243,238,.7);}
+
+/* activity cards */
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.act-card{background:var(--navy-card);border-radius:12px;padding:30px 26px 28px;border-top:3px solid var(--signal);transition:transform .25s ease,box-shadow .25s ease;display:flex;flex-direction:column;}
+.act-card:nth-child(2){border-top-color:var(--brass);}
+.act-card:nth-child(3){border-top-color:var(--mint);}
+.act-card:hover{transform:translateY(-6px);box-shadow:0 24px 44px -20px rgba(0,0,0,.65);}
+.act-num{font-family:var(--f-display);font-size:2.6rem;line-height:1;color:rgba(245,243,238,.16);margin-bottom:8px;}
+.act-card h3{font-family:var(--f-display);font-size:1.35rem;margin-bottom:8px;}
+.act-card p{color:rgba(245,243,238,.68);font-size:.92rem;flex:1;margin-bottom:18px;}
+.act-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.tag{font-family:var(--f-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;padding:4px 9px;border-radius:3px;background:rgba(245,243,238,.07);color:rgba(245,243,238,.65);}
+.act-link{font-family:var(--f-mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--brass);transition:color .2s ease;}
+.act-card:hover .act-link{color:var(--signal);}
+
+/* concept stubs */
+.stub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.stub{background:var(--navy-card);border-radius:10px;padding:30px 26px;border-left:3px solid var(--signal);transition:transform .25s ease;}
+.stub:hover{transform:translateY(-4px);}
+.stub .tag{margin-bottom:14px;display:inline-block;color:var(--brass);background:rgba(201,162,39,.12);}
+.stub h3{font-family:var(--f-display);font-size:1.3rem;margin-bottom:8px;}
+.stub p{color:rgba(245,243,238,.68);font-size:.91rem;}
+
+.cta-band{margin:0 32px 92px;background:linear-gradient(135deg,var(--navy-card),#23274a);border-radius:16px;padding:58px 52px;display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap;position:relative;overflow:hidden;}
+.cta-band::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,87,74,.25),transparent 70%);}
+.cta-band h2{font-family:var(--f-display);font-size:clamp(1.6rem,3.2vw,2.3rem);max-width:460px;position:relative;z-index:1;}
+.cta-band .btn-primary{position:relative;z-index:1;}
+
+footer.site-footer{border-top:1px solid var(--line);padding:44px 32px 34px;}
+.footer-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-brand{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.06em;}
+.footer-meta{font-family:var(--f-mono);font-size:.7rem;color:rgba(245,243,238,.5);text-align:right;line-height:1.75;}
+
+/* ---------- activity page ---------- */
+.act-header{border-bottom:1px solid var(--line);padding:44px 32px 38px;}
+.act-header-inner{max-width:900px;margin:0 auto;}
+.crumb{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,243,238,.5);margin-bottom:16px;}
+.crumb a:hover{color:var(--brass);}
+h1.act-title{font-family:var(--f-display);font-size:clamp(2.2rem,5.5vw,3.2rem);letter-spacing:.02em;margin-bottom:8px;}
+p.act-sub{font-family:var(--f-mono);font-size:.82rem;letter-spacing:.04em;color:var(--brass);text-transform:uppercase;margin-bottom:20px;}
+.act-desc{color:rgba(245,243,238,.72);max-width:620px;font-size:.98rem;}
+
+/* tabs */
+.stage{max-width:900px;margin:0 auto;padding:40px 32px 0;}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:0;}
+.tab{font-family:var(--f-mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;padding:13px 22px;color:rgba(245,243,238,.55);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s ease;}
+.tab:hover{color:var(--cream);}
+.tab.active{color:var(--brass);border-bottom-color:var(--brass);}
+.panel{display:none;padding-top:26px;}
+.panel.active{display:block;animation:fadeIn .3s ease;}
+
+/* terminal */
+.titlebar{display:flex;align-items:center;gap:8px;padding:13px 18px;background:var(--navy-card);border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;}
+.dot{width:11px;height:11px;border-radius:50%;}
+.dot.red{background:#ff5f56;}.dot.yellow{background:#ffbd2e;}.dot.green{background:#27c93f;}
+.filename{flex:1;text-align:center;font-family:var(--f-mono);font-size:.73rem;color:rgba(245,243,238,.55);margin-right:38px;}
+.terminal-body{background:var(--navy-deep);border:1px solid var(--line);border-radius:0 0 10px 10px;padding:28px 30px 32px;min-height:250px;font-family:var(--f-mono);font-size:.9rem;line-height:1.95;overflow-x:auto;}
+.output-line{opacity:0;animation:revealLine .4s ease forwards;white-space:pre-wrap;}
+@keyframes revealLine{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.output-line.prompt{color:var(--brass);font-weight:600;}
+.output-line .label{color:var(--brass);margin-right:4px;}
+.output-line .value{color:var(--cream);}
+.output-line .typed{color:var(--mint);}
+.divider{border:none;border-top:1px dashed rgba(245,243,238,.25);margin:14px 0;}
+.cursor{display:inline-block;width:8px;height:1em;background:var(--cream);vertical-align:middle;animation:blink 1s steps(1) infinite;}
+@keyframes blink{0%,50%{opacity:1;}50.01%,100%{opacity:0;}}
+.term-actions{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px;flex-wrap:wrap;}
+.replay-btn{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(245,243,238,.6);padding:8px 14px;border:1px solid var(--line);border-radius:3px;transition:all .2s ease;}
+.replay-btn:hover{color:var(--brass);border-color:var(--brass);}
+.term-note{font-family:var(--f-mono);font-size:.68rem;color:rgba(245,243,238,.4);letter-spacing:.04em;}
+
+/* code panel */
+.code-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--navy-card);border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;gap:12px;}
+.code-file{font-family:var(--f-mono);font-size:.74rem;color:rgba(245,243,238,.7);}
+.copy-btn{font-family:var(--f-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 12px;border:1px solid var(--line);border-radius:3px;color:rgba(245,243,238,.65);transition:all .2s ease;}
+.copy-btn:hover{color:var(--brass);border-color:var(--brass);}
+.copy-btn.done{color:var(--mint);border-color:var(--mint);}
+pre.code{background:var(--navy-deep);border:1px solid var(--line);border-radius:0 0 10px 10px;padding:24px 26px;overflow-x:auto;font-family:var(--f-mono);font-size:.84rem;line-height:1.85;counter-reset:ln;}
+pre.code .cl{display:block;white-space:pre;}
+pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-block;width:2.4em;color:rgba(245,243,238,.22);user-select:none;}
+.k{color:#7FA6F0;} .s{color:#E5A363;} .n{color:var(--mint);} .c{color:rgba(245,243,238,.35);font-style:italic;} .t{color:var(--brass);}
+
+/* concept panel */
+.concept-box{background:var(--navy-card);border-radius:10px;padding:26px 28px;margin-bottom:16px;border-left:3px solid var(--brass);}
+.concept-box h4{font-family:var(--f-display);font-size:1.15rem;margin-bottom:8px;letter-spacing:.02em;}
+.concept-box p{color:rgba(245,243,238,.72);font-size:.93rem;}
+.concept-box code{font-family:var(--f-mono);font-size:.86rem;background:rgba(245,243,238,.08);padding:2px 6px;border-radius:3px;color:var(--brass);}
+
+/* activity page footer nav */
+.act-footnav{max-width:900px;margin:56px auto 0;padding:28px 32px 64px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);}
+.footnav-btn{font-family:var(--f-mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(245,243,238,.65);transition:color .2s ease;}
+.footnav-btn:hover{color:var(--brass);}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .act-grid,.stub-grid{grid-template-columns:1fr;}
+  .main-nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--navy-card);padding:10px;border-bottom:1px solid var(--line);gap:2px;}
+  .main-nav.open{display:flex;}
+  .main-nav button{text-align:left;padding:13px 16px;}
+  .burger{display:block;}
+  .nav-cta{display:none;}
+}
+@media (max-width:560px){
+  .nav-inner{padding:14px 20px;}
+  .hero{padding:56px 20px 48px;}
+  .section{padding:56px 20px;}
+  .stage{padding:32px 20px 0;}
+  .act-header{padding:34px 20px 30px;}
+  .terminal-body{padding:22px 18px 26px;font-size:.82rem;}
+  pre.code{padding:20px 16px;font-size:.76rem;}
+  .cta-band{margin:0 20px 56px;padding:36px 26px;flex-direction:column;text-align:left;}
+  .footer-inner{flex-direction:column;align-items:flex-start;}
+  .footer-meta{text-align:left;}
+  .tabs{overflow-x:auto;}
+  .tab{padding:12px 16px;white-space:nowrap;}
+  .stats-inner{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand-mark"><span class="brand-dot"></span>C# ACTIVITIES</div>
+    <nav class="main-nav" id="mainNav">
+      <button onclick="goTo('home')" data-nav="home">Home</button>
+      <button onclick="goTo('a1')" data-nav="a1">Activity 1</button>
+      <button onclick="goTo('a2')" data-nav="a2">Activity 2</button>
+      <button onclick="goTo('a3')" data-nav="a3">Activity 3</button>
+      <button onclick="goTo('menu')" data-nav="menu">Main Menu</button>
+    </nav>
+    <a class="nav-cta" onclick="goTo('a1')">Start →</a>
+    <button class="burger" onclick="document.getElementById('mainNav').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">C# Console Fundamentals</div>
+        <h1>Same data.<br>Three <span>ways to run it.</span></h1>
+        <p class="lede">Three C# console programs — hardcoded output, declared variables, and runtime user input — plus a unified menu-driven launcher that ties all three together.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" onclick="goTo('a1')">Open Activity 1 →</a>
+          <a class="btn-ghost" onclick="goTo('menu')">View Main Menu</a>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-top">
+          <div class="ticket-label">Admit One — Submission Pass</div>
+          <div class="ticket-event">EVENTPRO LEC — Activity Set</div>
+          <div class="ticket-meta">
+            <div class="meta-item"><div class="k">Student</div><div class="v">Gimbert Ludovice</div></div>
+            <div class="meta-item"><div class="k">Section</div><div class="v">WITMWD3M1</div></div>
+            <div class="meta-item"><div class="k">Professor</div><div class="v">Carlo Batitis</div></div>
+            <div class="meta-item"><div class="k">Year Level</div><div class="v">2nd Year</div></div>
+          </div>
+        </div>
+        <div class="ticket-bottom">
+          <div class="barcode" aria-hidden="true">
+            <span style="height:14px"></span><span style="height:28px"></span><span style="height:20px"></span>
+            <span style="height:32px"></span><span style="height:16px"></span><span style="height:26px"></span>
+            <span style="height:22px"></span><span style="height:30px"></span><span style="height:12px"></span>
+            <span style="height:24px"></span><span style="height:18px"></span>
+          </div>
+          <div class="ticket-status">✓ 3 / 3 Complete</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat"><div class="num">03</div><div class="label">Activities</div></div>
+      <div class="stat"><div class="num">05</div><div class="label">Data Fields</div></div>
+      <div class="stat"><div class="num">04</div><div class="label">Source Files</div></div>
+      <div class="stat"><div class="num">C#</div><div class="label">Language</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The Activities</div>
+        <h2>Three programs, one dataset.</h2>
+        <p>Each activity outputs the same personal info a different way. Click any card to see the live output, the C# source, and the concept behind it.</p>
+      </div>
+      <div class="act-grid">
+        <div class="act-card" onclick="goTo('a1')">
+          <div class="act-num">01</div>
+          <h3>Display Personal Info</h3>
+          <p>Five fields printed straight from hardcoded string literals inside Console.WriteLine().</p>
+          <div class="act-tags"><span class="tag">Console.WriteLine</span><span class="tag">Static</span></div>
+          <div class="act-link">Open Activity 1 →</div>
+        </div>
+        <div class="act-card" onclick="goTo('a2')">
+          <div class="act-num">02</div>
+          <h3>Variables &amp; Multiplication</h3>
+          <p>Five declared variables including a computed product, then printed via string concatenation.</p>
+          <div class="act-tags"><span class="tag">int / string</span><span class="tag">Operators</span></div>
+          <div class="act-link">Open Activity 2 →</div>
+        </div>
+        <div class="act-card" onclick="goTo('a3')">
+          <div class="act-num">03</div>
+          <h3>Info via User Input</h3>
+          <p>The same five fields captured at runtime with Console.ReadLine() and echoed back.</p>
+          <div class="act-tags"><span class="tag">Console.ReadLine</span><span class="tag">Dynamic</span></div>
+          <div class="act-link">Open Activity 3 →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:rgba(46,51,88,.25);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The Concept Progression</div>
+        <h2>From static to dynamic.</h2>
+        <p>Each activity adds one layer of complexity to the same idea — getting personal data into the console.</p>
+      </div>
+      <div class="stub-grid">
+        <div class="stub" style="border-left-color:var(--signal)">
+          <span class="tag">Static</span>
+          <h3>Hardcoded Values</h3>
+          <p>Text is written directly into the WriteLine call. Output never changes unless you edit the source and recompile.</p>
+        </div>
+        <div class="stub" style="border-left-color:var(--brass)">
+          <span class="tag">Declared</span>
+          <h3>Variables</h3>
+          <p>Values live in typed variables first. One value is computed at runtime — the program does arithmetic instead of just printing.</p>
+        </div>
+        <div class="stub" style="border-left-color:var(--mint)">
+          <span class="tag">Dynamic</span>
+          <h3>User Input</h3>
+          <p>ReadLine() pauses execution and waits. Output depends entirely on whoever is running the program.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>All three, one launcher. See the menu-driven version.</h2>
+    <a class="btn-primary" onclick="goTo('menu')">Open Main Menu →</a>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">EVENTPRO LEC</div>
+      <div class="footer-meta">
+        Gimbert Ludovice · 2nd Year, WITMWD3M1<br>
+        EVENTPRO LEC · Prof. Carlo Batitis
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ================= ACTIVITY 1 ================= -->
+<div class="page" id="page-a1">
+  <div class="act-header">
+    <div class="act-header-inner">
+      <div class="crumb"><a onclick="goTo('home')">Home</a> / Activity 1</div>
+      <h1 class="act-title">ACTIVITY 1</h1>
+      <p class="act-sub">Display Personal Info · Hardcoded Values</p>
+      <p class="act-desc">The simplest form of console output. Every value is typed directly into the <code style="font-family:var(--f-mono);color:var(--brass)">Console.WriteLine()</code> call — no variables, no input, no logic.</p>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab(this,'a1-out')">Output</button>
+      <button class="tab" onclick="showTab(this,'a1-code')">C# Source</button>
+      <button class="tab" onclick="showTab(this,'a1-con')">Concept</button>
+    </div>
+
+    <div class="panel active" id="a1-out">
+      <div class="titlebar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="filename">Activity1.cs — Display Personal Info</span>
+      </div>
+      <div class="terminal-body" id="term1"></div>
+      <div class="term-actions">
+        <button class="replay-btn" onclick="playTerminal('term1')">↻ Replay Output</button>
+        <span class="term-note">Rendered preview · run in a C# environment for the live version</span>
+      </div>
+    </div>
+
+    <div class="panel" id="a1-code">
+      <div class="code-head">
+        <span class="code-file">Activity1.cs</span>
+        <button class="copy-btn" onclick="copyCode(this,'code1')">Copy</button>
+      </div>
+      <pre class="code" id="code1"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: [Gimbert Ludovice]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: [Bachelor of Science in Information Technology Specialization in Mobile and Website Development]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: [Biñan]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: [Laguna]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: [10/13/2006]"</span>);</span><span class="cl">    }</span><span class="cl">}</span></pre>
+    </div>
+
+    <div class="panel" id="a1-con">
+      <div class="concept-box">
+        <h4>Console.WriteLine()</h4>
+        <p>Writes a line of text to the console and moves the cursor to the next line. Use <code>Console.Write()</code> instead when you don't want the line break — that's what Activity 3 uses for input prompts.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--signal)">
+        <h4>String Literals</h4>
+        <p>Text wrapped in double quotes is a literal — it's baked into the compiled program. Changing the output means editing the source and recompiling, which is exactly the limitation Activity 2 and 3 solve.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--mint)">
+        <h4>Entry Point</h4>
+        <p>Every C# console app starts at <code>static void Main()</code>. Only one <code>Main()</code> can exist per project — otherwise the compiler throws error <code>CS0017</code>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="act-footnav">
+    <a class="footnav-btn" onclick="goTo('home')">← Home</a>
+    <a class="footnav-btn" onclick="goTo('a2')">Activity 2 →</a>
+  </div>
+</div>
+
+<!-- ================= ACTIVITY 2 ================= -->
+<div class="page" id="page-a2">
+  <div class="act-header">
+    <div class="act-header-inner">
+      <div class="crumb"><a onclick="goTo('home')">Home</a> / Activity 2</div>
+      <h1 class="act-title">ACTIVITY 2</h1>
+      <p class="act-sub">Variables &amp; Multiplication</p>
+      <p class="act-desc">Five variables are declared with explicit types. Two integers are multiplied and the result stored in a third — the program computes rather than just prints.</p>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab(this,'a2-out')">Output</button>
+      <button class="tab" onclick="showTab(this,'a2-code')">C# Source</button>
+      <button class="tab" onclick="showTab(this,'a2-con')">Concept</button>
+    </div>
+
+    <div class="panel active" id="a2-out">
+      <div class="titlebar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="filename">Activity2.cs — Variables &amp; Multiplication</span>
+      </div>
+      <div class="terminal-body" id="term2"></div>
+      <div class="term-actions">
+        <button class="replay-btn" onclick="playTerminal('term2')">↻ Replay Output</button>
+        <span class="term-note">Rendered preview · run in a C# environment for the live version</span>
+      </div>
+    </div>
+
+    <div class="panel" id="a2-code">
+      <div class="code-head">
+        <span class="code-file">Activity2.cs</span>
+        <button class="copy-btn" onclick="copyCode(this,'code2')">Copy</button>
+      </div>
+      <pre class="code" id="code2"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        <span class="k">int</span> num1 = <span class="n">8</span>;</span><span class="cl">        <span class="k">int</span> num2 = <span class="n">5</span>;</span><span class="cl">        <span class="k">int</span> product = num1 * num2;</span><span class="cl">        <span class="k">string</span> studentName = <span class="s">"Gimbert Ludovice"</span>;</span><span class="cl">        <span class="k">string</span> course = <span class="s">"Bachelor of Science in Information Technology Specialization in Mobile and Website Development"</span>;</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"Variable 1 (num1): "</span> + num1);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 2 (num2): "</span> + num2);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 3 (product of num1 * num2): "</span> + product);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 4 (studentName): "</span> + studentName);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 5 (course): "</span> + course);</span><span class="cl">    }</span><span class="cl">}</span></pre>
+    </div>
+
+    <div class="panel" id="a2-con">
+      <div class="concept-box">
+        <h4>Data Types</h4>
+        <p><code>int</code> holds whole numbers; <code>string</code> holds text. C# is statically typed — declare the type once and the variable can only hold that kind of value.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--signal)">
+        <h4>Arithmetic Operators</h4>
+        <p><code>num1 * num2</code> is evaluated first, then assigned to <code>product</code>. The value 40 isn't stored in the source — it's calculated when the program runs.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--mint)">
+        <h4>String Concatenation</h4>
+        <p>The <code>+</code> operator joins a string to an int by implicitly calling <code>ToString()</code> on the number. Cleaner modern alternative: string interpolation — <code>$"num1: {num1}"</code>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="act-footnav">
+    <a class="footnav-btn" onclick="goTo('a1')">← Activity 1</a>
+    <a class="footnav-btn" onclick="goTo('a3')">Activity 3 →</a>
+  </div>
+</div>
+
+<!-- ================= ACTIVITY 3 ================= -->
+<div class="page" id="page-a3">
+  <div class="act-header">
+    <div class="act-header-inner">
+      <div class="crumb"><a onclick="goTo('home')">Home</a> / Activity 3</div>
+      <h1 class="act-title">ACTIVITY 3</h1>
+      <p class="act-sub">Personal Info · User Input</p>
+      <p class="act-desc">Execution pauses at each prompt and waits for the user. The same five fields, but the output now depends entirely on what's typed at runtime.</p>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab(this,'a3-out')">Output</button>
+      <button class="tab" onclick="showTab(this,'a3-code')">C# Source</button>
+      <button class="tab" onclick="showTab(this,'a3-con')">Concept</button>
+    </div>
+
+    <div class="panel active" id="a3-out">
+      <div class="titlebar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="filename">Activity3.cs — Personal Info (User Input)</span>
+      </div>
+      <div class="terminal-body" id="term3"></div>
+      <div class="term-actions">
+        <button class="replay-btn" onclick="playTerminal('term3')">↻ Replay Output</button>
+        <span class="term-note">Green text = simulated user input</span>
+      </div>
+    </div>
+
+    <div class="panel" id="a3-code">
+      <div class="code-head">
+        <span class="code-file">Activity3.cs</span>
+        <button class="copy-btn" onclick="copyCode(this,'code3')">Copy</button>
+      </div>
+      <pre class="code" id="code3"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        Console.Write(<span class="s">"Enter Fullname: "</span>);</span><span class="cl">        <span class="k">string</span> fullname = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Course with Specialization: "</span>);</span><span class="cl">        <span class="k">string</span> course = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Municipality: "</span>);</span><span class="cl">        <span class="k">string</span> municipality = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Province: "</span>);</span><span class="cl">        <span class="k">string</span> province = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Date of Birth (MM/DD/YYYY): "</span>);</span><span class="cl">        <span class="k">string</span> dob = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"\n--- Your Information ---"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: "</span> + fullname);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: "</span> + course);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: "</span> + municipality);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: "</span> + province);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: "</span> + dob);</span><span class="cl">    }</span><span class="cl">}</span></pre>
+    </div>
+
+    <div class="panel" id="a3-con">
+      <div class="concept-box">
+        <h4>Console.ReadLine()</h4>
+        <p>Blocks execution until the user presses Enter, then returns everything typed as a <code>string</code>. Numbers need converting — <code>int.Parse()</code> or the safer <code>int.TryParse()</code>.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--signal)">
+        <h4>Write vs WriteLine</h4>
+        <p><code>Console.Write()</code> keeps the cursor on the same line, so the user types right after the prompt. Using WriteLine here would push input to the next line and look broken.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--mint)">
+        <h4>Escape Sequences</h4>
+        <p><code>\n</code> inserts a newline inside a string. Other common ones: <code>\t</code> for tab, <code>\\</code> for a literal backslash, <code>\"</code> for a quote.</p>
+      </div>
+    </div>
+  </div>
+  <div class="act-footnav">
+    <a class="footnav-btn" onclick="goTo('a2')">← Activity 2</a>
+    <a class="footnav-btn" onclick="goTo('menu')">Main Menu →</a>
+  </div>
+</div>
+
+<!-- ================= MAIN MENU (Program.cs) ================= -->
+<div class="page" id="page-menu">
+  <div class="act-header">
+    <div class="act-header-inner">
+      <div class="crumb"><a onclick="goTo('home')">Home</a> / Main Menu</div>
+      <h1 class="act-title">MAIN MENU</h1>
+      <p class="act-sub">Program.cs · Menu-Driven Launcher</p>
+      <p class="act-desc">All three activities in one program. A <code style="font-family:var(--f-mono);color:var(--brass)">while</code> loop keeps the menu alive and a <code style="font-family:var(--f-mono);color:var(--brass)">switch</code> routes the user's choice to the right method.</p>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab(this,'m-out')">Output</button>
+      <button class="tab" onclick="showTab(this,'m-code')">C# Source</button>
+      <button class="tab" onclick="showTab(this,'m-con')">Concept</button>
+    </div>
+
+    <div class="panel active" id="m-out">
+      <div class="titlebar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="filename">Program.cs — Menu Launcher</span>
+      </div>
+      <div class="terminal-body" id="term4"></div>
+      <div class="term-actions">
+        <button class="replay-btn" onclick="playTerminal('term4')">↻ Replay Output</button>
+        <span class="term-note">Green text = simulated user input</span>
+      </div>
+    </div>
+
+    <div class="panel" id="m-code">
+      <div class="code-head">
+        <span class="code-file">Program.cs</span>
+        <button class="copy-btn" onclick="copyCode(this,'code4')">Copy</button>
+      </div>
+      <pre class="code" id="code4"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        <span class="k">bool</span> running = <span class="k">true</span>;</span><span class="cl"></span><span class="cl">        <span class="k">while</span> (running)</span><span class="cl">        {</span><span class="cl">            Console.Clear();</span><span class="cl">            Console.WriteLine(<span class="s">"========================================="</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"        C# PROGRAMMING ACTIVITIES        "</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"========================================="</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[1] Activity 1 - Display Personal Info (hardcoded)"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[2] Activity 2 - Variables and Multiplication"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[3] Activity 3 - Display Personal Info (user input)"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[4] Exit"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"========================================="</span>);</span><span class="cl">            Console.Write(<span class="s">"Choose an option (1-4): "</span>);</span><span class="cl"></span><span class="cl">            <span class="k">string</span> choice = Console.ReadLine();</span><span class="cl">            Console.WriteLine();</span><span class="cl"></span><span class="cl">            <span class="k">switch</span> (choice)</span><span class="cl">            {</span><span class="cl">                <span class="k">case</span> <span class="s">"1"</span>: Activity1(); <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> <span class="s">"2"</span>: Activity2(); <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> <span class="s">"3"</span>: Activity3(); <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> <span class="s">"4"</span>:</span><span class="cl">                    running = <span class="k">false</span>;</span><span class="cl">                    Console.WriteLine(<span class="s">"Exiting program. Goodbye!"</span>);</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">                <span class="k">default</span>:</span><span class="cl">                    Console.WriteLine(<span class="s">"Invalid option. Please choose 1-4."</span>);</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">            }</span><span class="cl"></span><span class="cl">            <span class="k">if</span> (running)</span><span class="cl">            {</span><span class="cl">                Console.WriteLine(<span class="s">"\nPress any key to return to the menu..."</span>);</span><span class="cl">                Console.ReadKey();</span><span class="cl">            }</span><span class="cl">        }</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ACTIVITY 1: Display hardcoded personal information</span></span><span class="cl">    <span class="k">static void</span> <span class="t">Activity1</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"--- ACTIVITY 1: Personal Information ---"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: Gimbert Ludovice"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: Bachelor of Science in Information Technology Specialization in Mobile and Website Development"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: Biñan"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: Laguna"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: 10/13/2006"</span>);</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ACTIVITY 2: Declare 5 variables, multiply 2, display all</span></span><span class="cl">    <span class="k">static void</span> <span class="t">Activity2</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"--- ACTIVITY 2: Variables and Multiplication ---"</span>);</span><span class="cl"></span><span class="cl">        <span class="k">int</span> num1 = <span class="n">8</span>;</span><span class="cl">        <span class="k">int</span> num2 = <span class="n">5</span>;</span><span class="cl">        <span class="k">int</span> product = num1 * num2;</span><span class="cl">        <span class="k">string</span> studentName = <span class="s">"Gimbert Ludovice"</span>;</span><span class="cl">        <span class="k">string</span> course = <span class="s">"Bachelor of Science in Information Technology Specialization in Mobile and Website Development"</span>;</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"Variable 1 (num1): "</span> + num1);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 2 (num2): "</span> + num2);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 3 (product of num1 * num2): "</span> + product);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 4 (studentName): "</span> + studentName);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 5 (course): "</span> + course);</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ACTIVITY 3: Get personal information via user input</span></span><span class="cl">    <span class="k">static void</span> <span class="t">Activity3</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"--- ACTIVITY 3: Personal Information (User Input) ---"</span>);</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Fullname: "</span>);</span><span class="cl">        <span class="k">string</span> fullname = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Course with Specialization: "</span>);</span><span class="cl">        <span class="k">string</span> course = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Municipality: "</span>);</span><span class="cl">        <span class="k">string</span> municipality = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Province: "</span>);</span><span class="cl">        <span class="k">string</span> province = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Date of Birth (MM/DD/YYYY): "</span>);</span><span class="cl">        <span class="k">string</span> dob = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"\n--- Your Information ---"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: "</span> + fullname);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: "</span> + course);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: "</span> + municipality);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: "</span> + province);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: "</span> + dob);</span><span class="cl">    }</span><span class="cl">}</span></pre>
+    </div>
+
+    <div class="panel" id="m-con">
+      <div class="concept-box">
+        <h4>While Loop</h4>
+        <p>The menu repeats as long as <code>running</code> is true. Setting it to false on option 4 is what lets the loop finish and the program exit cleanly.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--signal)">
+        <h4>Switch Statement</h4>
+        <p>Cleaner than a chain of if-else for matching one value against several options. The <code>default</code> case catches anything invalid, so a stray keystroke doesn't crash the program.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:var(--mint)">
+        <h4>Methods</h4>
+        <p>Each activity lives in its own <code>static void</code> method. Main stays short and readable — this is the same decomposition principle behind every larger codebase.</p>
+      </div>
+      <div class="concept-box" style="border-left-color:#7FA6F0">
+        <h4>⚠ One Entry Point Per Project</h4>
+        <p>Activity1.cs, Activity2.cs, and Activity3.cs each declare their own <code>Main()</code>. Compiling them alongside Program.cs triggers error <code>CS0017</code>. Keep only Program.cs in the build and store the rest in a separate reference folder.</p>
+      </div>
+    </div>
+  </div>
+  <div class="act-footnav">
+    <a class="footnav-btn" onclick="goTo('a3')">← Activity 3</a>
+    <a class="footnav-btn" onclick="goTo('home')">Home →</a>
+  </div>
+</div>
+
+<script>
+const COURSE = "Bachelor of Science in Information Technology Specialization in Mobile and Website Development";
+
+const terminals = {
+  term1: [
+    {type:"cmd", text:"$ dotnet run --activity 1"},
+    {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
+    {type:"line", label:"Course with Specialization", value:COURSE},
+    {type:"line", label:"Municipality", value:"Biñan"},
+    {type:"line", label:"Province", value:"Laguna"},
+    {type:"line", label:"Date of Birth", value:"10/13/2006"},
+  ],
+  term2: [
+    {type:"cmd", text:"$ dotnet run --activity 2"},
+    {type:"line", label:"Variable 1 (num1)", value:"8"},
+    {type:"line", label:"Variable 2 (num2)", value:"5"},
+    {type:"line", label:"Variable 3 (product of num1 * num2)", value:"40"},
+    {type:"line", label:"Variable 4 (studentName)", value:"Gimbert Ludovice"},
+    {type:"line", label:"Variable 5 (course)", value:COURSE},
+  ],
+  term3: [
+    {type:"cmd", text:"$ dotnet run --activity 3"},
+    {type:"input", prompt:"Enter Fullname: ", typed:"Gimbert Ludovice"},
+    {type:"input", prompt:"Enter Course with Specialization: ", typed:COURSE},
+    {type:"input", prompt:"Enter Municipality: ", typed:"Biñan"},
+    {type:"input", prompt:"Enter Province: ", typed:"Laguna"},
+    {type:"input", prompt:"Enter Date of Birth (MM/DD/YYYY): ", typed:"10/13/2006"},
+    {type:"divider"},
+    {type:"cmd", text:"--- Your Information ---"},
+    {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
+    {type:"line", label:"Course with Specialization", value:COURSE},
+    {type:"line", label:"Municipality", value:"Biñan"},
+    {type:"line", label:"Province", value:"Laguna"},
+    {type:"line", label:"Date of Birth", value:"10/13/2006"},
+  ],
+  term4: [
+    {type:"cmd", text:"$ dotnet run"},
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"        C# PROGRAMMING ACTIVITIES        "},
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"[1] Activity 1 - Display Personal Info (hardcoded)"},
+    {type:"plain", text:"[2] Activity 2 - Variables and Multiplication"},
+    {type:"plain", text:"[3] Activity 3 - Display Personal Info (user input)"},
+    {type:"plain", text:"[4] Exit"},
+    {type:"plain", text:"========================================="},
+    {type:"input", prompt:"Choose an option (1-4): ", typed:"1"},
+    {type:"divider"},
+    {type:"cmd", text:"--- ACTIVITY 1: Personal Information ---"},
+    {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
+    {type:"line", label:"Course with Specialization", value:COURSE},
+    {type:"line", label:"Municipality", value:"Biñan"},
+    {type:"line", label:"Province", value:"Laguna"},
+    {type:"line", label:"Date of Birth", value:"10/13/2006"},
+    {type:"divider"},
+    {type:"plain", text:"Press any key to return to the menu..."},
+  ],
+};
+
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function renderLine(item){
+  if(item.type==="divider") return '<hr class="divider">';
+  if(item.type==="cmd") return '<div class="output-line prompt">'+esc(item.text)+'</div>';
+  if(item.type==="plain") return '<div class="output-line">'+esc(item.text)+'</div>';
+  if(item.type==="input") return '<div class="output-line">'+esc(item.prompt)+'<span class="typed">'+esc(item.typed)+'</span></div>';
+  return '<div class="output-line"><span class="label">'+esc(item.label)+':</span> <span class="value">'+esc(item.value)+'</span></div>';
+}
+
+function playTerminal(id){
+  const box=document.getElementById(id);
+  if(!box) return;
+  box.innerHTML="";
+  let delay=150;
+  terminals[id].forEach(item=>{
+    const w=document.createElement("div");
+    w.innerHTML=renderLine(item);
+    const el=w.firstElementChild;
+    if(el.classList.contains("output-line")) el.style.animationDelay=delay+"ms";
+    box.appendChild(el);
+    delay += item.type==="divider" ? 70 : 120;
+  });
+  const c=document.createElement("span");
+  c.className="cursor";
+  box.appendChild(c);
+}
+
+function showTab(btn,panelId){
+  const stage=btn.closest(".stage");
+  stage.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  stage.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(panelId).classList.add("active");
+}
+
+function copyCode(btn,codeId){
+  const text=document.getElementById(codeId).innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent="✓ Copied";
+    btn.classList.add("done");
+    setTimeout(()=>{btn.textContent="Copy";btn.classList.remove("done");},1800);
+  }).catch(()=>{
+    btn.textContent="Press Ctrl+C";
+    setTimeout(()=>{btn.textContent="Copy";},1800);
+  });
+}
+
+const termFor={a1:"term1",a2:"term2",a3:"term3",menu:"term4"};
+
+function goTo(key){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const target=document.getElementById("page-"+key);
+  if(!target) return;
+  target.classList.add("active");
+  document.querySelectorAll("[data-nav]").forEach(b=>{
+    b.classList.toggle("current", b.dataset.nav===key);
+  });
+  document.getElementById("mainNav").classList.remove("open");
+  window.scrollTo(0,0);
+  if(termFor[key]) playTerminal(termFor[key]);
+  history.replaceState(null,"","#"+key);
+}
+
+window.addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById("progress").style.width=(pct||0)+"%";
+});
+
+document.addEventListener("keydown",e=>{
+  if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA") return;
+  const order=["home","a1","a2","a3","menu"];
+  const cur=(location.hash.replace("#","")||"home");
+  const i=order.indexOf(cur);
+  if(i<0) return;
+  if(e.key==="ArrowRight"&&i<order.length-1) goTo(order[i+1]);
+  if(e.key==="ArrowLeft"&&i>0) goTo(order[i-1]);
+});
+
+window.addEventListener("DOMContentLoaded",()=>{
+  const valid=["home","a1","a2","a3","menu"];
+  const h=location.hash.replace("#","");
+  goTo(valid.includes(h)?h:"home");
+});
+</script>
+
+</body>
+</html>
