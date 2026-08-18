@@ -185,6 +185,20 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
 .footnav-btn{font-family:var(--f-mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(245,243,238,.65);transition:color .2s ease;}
 .footnav-btn:hover{color:var(--brass);}
 
+
+/* stacked blocks (replaces tabs) */
+.stage{max-width:900px;margin:0 auto;padding:44px 32px 0;}
+.block{margin-bottom:52px;}
+.block-label{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,238,.5);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.bl-num{font-family:var(--f-display);font-size:1.05rem;color:var(--brass);letter-spacing:.04em;}
+.block-label::after{content:'';flex:1;height:1px;background:var(--line);}
+.output-line.dim{color:rgba(245,243,238,.42);font-style:italic;}
+.output-line.exit{color:var(--mint);font-weight:600;}
+.screenbreak{border:none;border-top:2px solid rgba(201,162,39,.35);margin:20px 0;}
+.caret{display:inline-block;width:8px;height:1.05em;background:var(--mint);vertical-align:text-bottom;margin-left:1px;animation:blink 1s steps(1) infinite;}
+.term-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.term-note{margin-left:auto;}
+
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
@@ -354,36 +368,36 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
   </footer>
 </div>
 
+
 <!-- ================= ACTIVITY 1 ================= -->
 <div class="page" id="page-a1">
   <div class="act-header">
     <div class="act-header-inner">
       <div class="crumb"><a onclick="goTo('home')">Home</a> / Activity 1</div>
       <h1 class="act-title">ACTIVITY 1</h1>
-      <p class="act-sub">Display Personal Info · Hardcoded Values</p>
-      <p class="act-desc">The simplest form of console output. Every value is typed directly into the <code style="font-family:var(--f-mono);color:var(--brass)">Console.WriteLine()</code> call — no variables, no input, no logic.</p>
+      <p class="act-sub">Display Personal Info &middot; Hardcoded Values</p>
+      <p class="act-desc">The simplest form of console output. Every value is typed directly into the <code style="font-family:var(--f-mono);color:var(--brass)">Console.WriteLine()</code> call &mdash; no variables, no input, no logic.</p>
     </div>
   </div>
-  <div class="stage">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab(this,'a1-out')">Output</button>
-      <button class="tab" onclick="showTab(this,'a1-code')">C# Source</button>
-      <button class="tab" onclick="showTab(this,'a1-con')">Concept</button>
-    </div>
 
-    <div class="panel active" id="a1-out">
+  <div class="stage">
+
+    <div class="block">
+      <div class="block-label"><span class="bl-num">01</span> Console Output</div>
       <div class="titlebar">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-        <span class="filename">Activity1.cs — Display Personal Info</span>
+        <span class="filename">Activity1.cs &mdash; Display Personal Info</span>
       </div>
       <div class="terminal-body" id="term1"></div>
       <div class="term-actions">
-        <button class="replay-btn" onclick="playTerminal('term1')">↻ Replay Output</button>
-        <span class="term-note">Rendered preview · run in a C# environment for the live version</span>
+        <button class="replay-btn" onclick="playTerminal('term1')">&#8635; Replay</button>
+        <button class="replay-btn" onclick="skipTerminal('term1')">&#9193; Skip to end</button>
+        <span class="term-note">Brackets are part of the string literals</span>
       </div>
     </div>
 
-    <div class="panel" id="a1-code">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">02</span> C# Source Code</div>
       <div class="code-head">
         <span class="code-file">Activity1.cs</span>
         <button class="copy-btn" onclick="copyCode(this,'code1')">Copy</button>
@@ -391,7 +405,8 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
       <pre class="code" id="code1"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: [Gimbert Ludovice]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: [Bachelor of Science in Information Technology Specialization in Mobile and Website Development]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: [Biñan]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: [Laguna]"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: [10/13/2006]"</span>);</span><span class="cl">    }</span><span class="cl">}</span></pre>
     </div>
 
-    <div class="panel" id="a1-con">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">03</span> Concepts Used</div>
       <div class="concept-box">
         <h4>Console.WriteLine()</h4>
         <p>Writes a line of text to the console and moves the cursor to the next line. Use <code>Console.Write()</code> instead when you don't want the line break — that's what Activity 3 uses for input prompts.</p>
@@ -405,10 +420,12 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
         <p>Every C# console app starts at <code>static void Main()</code>. Only one <code>Main()</code> can exist per project — otherwise the compiler throws error <code>CS0017</code>.</p>
       </div>
     </div>
+
   </div>
+
   <div class="act-footnav">
-    <a class="footnav-btn" onclick="goTo('home')">← Home</a>
-    <a class="footnav-btn" onclick="goTo('a2')">Activity 2 →</a>
+    <a class="footnav-btn" onclick="goTo('home')">&larr; Home</a>
+    <a class="footnav-btn" onclick="goTo('a2')">Activity 2 &rarr;</a>
   </div>
 </div>
 
@@ -419,37 +436,37 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
       <div class="crumb"><a onclick="goTo('home')">Home</a> / Activity 2</div>
       <h1 class="act-title">ACTIVITY 2</h1>
       <p class="act-sub">Variables &amp; Multiplication</p>
-      <p class="act-desc">Five variables are declared with explicit types. Two integers are multiplied and the result stored in a third — the program computes rather than just prints.</p>
+      <p class="act-desc">Five variables are declared with explicit types. Two integers are multiplied and the result stored in a third &mdash; the program computes rather than just prints.</p>
     </div>
   </div>
-  <div class="stage">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab(this,'a2-out')">Output</button>
-      <button class="tab" onclick="showTab(this,'a2-code')">C# Source</button>
-      <button class="tab" onclick="showTab(this,'a2-con')">Concept</button>
-    </div>
 
-    <div class="panel active" id="a2-out">
+  <div class="stage">
+
+    <div class="block">
+      <div class="block-label"><span class="bl-num">01</span> Console Output</div>
       <div class="titlebar">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-        <span class="filename">Activity2.cs — Variables &amp; Multiplication</span>
+        <span class="filename">Activity2.cs &mdash; Variables and Multiplication</span>
       </div>
       <div class="terminal-body" id="term2"></div>
       <div class="term-actions">
-        <button class="replay-btn" onclick="playTerminal('term2')">↻ Replay Output</button>
-        <span class="term-note">Rendered preview · run in a C# environment for the live version</span>
+        <button class="replay-btn" onclick="playTerminal('term2')">&#8635; Replay</button>
+        <button class="replay-btn" onclick="skipTerminal('term2')">&#9193; Skip to end</button>
+        <span class="term-note">8 &times; 5 is computed at runtime, not hardcoded</span>
       </div>
     </div>
 
-    <div class="panel" id="a2-code">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">02</span> C# Source Code</div>
       <div class="code-head">
         <span class="code-file">Activity2.cs</span>
         <button class="copy-btn" onclick="copyCode(this,'code2')">Copy</button>
       </div>
-      <pre class="code" id="code2"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        <span class="k">int</span> num1 = <span class="n">8</span>;</span><span class="cl">        <span class="k">int</span> num2 = <span class="n">5</span>;</span><span class="cl">        <span class="k">int</span> product = num1 * num2;</span><span class="cl">        <span class="k">string</span> studentName = <span class="s">"Gimbert Ludovice"</span>;</span><span class="cl">        <span class="k">string</span> course = <span class="s">"Bachelor of Science in Information Technology Specialization in Mobile and Website Development"</span>;</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"Variable 1 (num1): "</span> + num1);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 2 (num2): "</span> + num2);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 3 (product of num1 * num2): "</span> + product);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 4 (studentName): "</span> + studentName);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 5 (course): "</span> + course);</span><span class="cl">    }</span><span class="cl">}</span></pre>
+      <pre class="code" id="code2"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        <span class="k">int</span> num1 = <span class="n">8</span>;</span><span class="cl">        <span class="k">int</span> num2 = <span class="n">5</span>;</span><span class="cl">        <span class="k">int</span> product = num1 * num2;</span><span class="cl">        <span class="k">string</span> studentName = <span class="s">"Gimbert Ludovice"</span>;</span><span class="cl">        <span class="k">string</span> course = <span class="s">"BS Information Technology Specialized in Mobile and Website Development"</span>;</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"Variable 1 (num1): "</span> + num1);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 2 (num2): "</span> + num2);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 3 (product of num1 * num2): "</span> + product);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 4 (studentName): "</span> + studentName);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 5 (course): "</span> + course);</span><span class="cl">    }</span><span class="cl">}</span></pre>
     </div>
 
-    <div class="panel" id="a2-con">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">03</span> Concepts Used</div>
       <div class="concept-box">
         <h4>Data Types</h4>
         <p><code>int</code> holds whole numbers; <code>string</code> holds text. C# is statically typed — declare the type once and the variable can only hold that kind of value.</p>
@@ -463,10 +480,12 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
         <p>The <code>+</code> operator joins a string to an int by implicitly calling <code>ToString()</code> on the number. Cleaner modern alternative: string interpolation — <code>$"num1: {num1}"</code>.</p>
       </div>
     </div>
+
   </div>
+
   <div class="act-footnav">
-    <a class="footnav-btn" onclick="goTo('a1')">← Activity 1</a>
-    <a class="footnav-btn" onclick="goTo('a3')">Activity 3 →</a>
+    <a class="footnav-btn" onclick="goTo('a1')">&larr; Activity 1</a>
+    <a class="footnav-btn" onclick="goTo('a3')">Activity 3 &rarr;</a>
   </div>
 </div>
 
@@ -476,30 +495,29 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
     <div class="act-header-inner">
       <div class="crumb"><a onclick="goTo('home')">Home</a> / Activity 3</div>
       <h1 class="act-title">ACTIVITY 3</h1>
-      <p class="act-sub">Personal Info · User Input</p>
-      <p class="act-desc">Execution pauses at each prompt and waits for the user. The same five fields, but the output now depends entirely on what's typed at runtime.</p>
+      <p class="act-sub">Personal Info &middot; User Input</p>
+      <p class="act-desc">Execution pauses at each prompt and waits for the user. Watch the input get typed in character by character &mdash; that is what <code style="font-family:var(--f-mono);color:var(--brass)">Console.ReadLine()</code> is capturing.</p>
     </div>
   </div>
-  <div class="stage">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab(this,'a3-out')">Output</button>
-      <button class="tab" onclick="showTab(this,'a3-code')">C# Source</button>
-      <button class="tab" onclick="showTab(this,'a3-con')">Concept</button>
-    </div>
 
-    <div class="panel active" id="a3-out">
+  <div class="stage">
+
+    <div class="block">
+      <div class="block-label"><span class="bl-num">01</span> Console Output</div>
       <div class="titlebar">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-        <span class="filename">Activity3.cs — Personal Info (User Input)</span>
+        <span class="filename">Activity3.cs &mdash; Personal Info (User Input)</span>
       </div>
       <div class="terminal-body" id="term3"></div>
       <div class="term-actions">
-        <button class="replay-btn" onclick="playTerminal('term3')">↻ Replay Output</button>
-        <span class="term-note">Green text = simulated user input</span>
+        <button class="replay-btn" onclick="playTerminal('term3')">&#8635; Replay</button>
+        <button class="replay-btn" onclick="skipTerminal('term3')">&#9193; Skip to end</button>
+        <span class="term-note">Green text is typed live &mdash; simulating real user input</span>
       </div>
     </div>
 
-    <div class="panel" id="a3-code">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">02</span> C# Source Code</div>
       <div class="code-head">
         <span class="code-file">Activity3.cs</span>
         <button class="copy-btn" onclick="copyCode(this,'code3')">Copy</button>
@@ -507,7 +525,8 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
       <pre class="code" id="code3"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        Console.Write(<span class="s">"Enter Fullname: "</span>);</span><span class="cl">        <span class="k">string</span> fullname = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Course with Specialization: "</span>);</span><span class="cl">        <span class="k">string</span> course = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Municipality: "</span>);</span><span class="cl">        <span class="k">string</span> municipality = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Province: "</span>);</span><span class="cl">        <span class="k">string</span> province = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Date of Birth (MM/DD/YYYY): "</span>);</span><span class="cl">        <span class="k">string</span> dob = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"\n--- Your Information ---"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: "</span> + fullname);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: "</span> + course);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: "</span> + municipality);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: "</span> + province);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: "</span> + dob);</span><span class="cl">    }</span><span class="cl">}</span></pre>
     </div>
 
-    <div class="panel" id="a3-con">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">03</span> Concepts Used</div>
       <div class="concept-box">
         <h4>Console.ReadLine()</h4>
         <p>Blocks execution until the user presses Enter, then returns everything typed as a <code>string</code>. Numbers need converting — <code>int.Parse()</code> or the safer <code>int.TryParse()</code>.</p>
@@ -521,51 +540,53 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
         <p><code>\n</code> inserts a newline inside a string. Other common ones: <code>\t</code> for tab, <code>\\</code> for a literal backslash, <code>\"</code> for a quote.</p>
       </div>
     </div>
+
   </div>
+
   <div class="act-footnav">
-    <a class="footnav-btn" onclick="goTo('a2')">← Activity 2</a>
-    <a class="footnav-btn" onclick="goTo('menu')">Main Menu →</a>
+    <a class="footnav-btn" onclick="goTo('a2')">&larr; Activity 2</a>
+    <a class="footnav-btn" onclick="goTo('menu')">Main Menu &rarr;</a>
   </div>
 </div>
 
-<!-- ================= MAIN MENU (Program.cs) ================= -->
+<!-- ================= MAIN MENU ================= -->
 <div class="page" id="page-menu">
   <div class="act-header">
     <div class="act-header-inner">
       <div class="crumb"><a onclick="goTo('home')">Home</a> / Main Menu</div>
       <h1 class="act-title">MAIN MENU</h1>
-      <p class="act-sub">Program.cs · Menu-Driven Launcher</p>
-      <p class="act-desc">All three activities in one program. A <code style="font-family:var(--f-mono);color:var(--brass)">while</code> loop keeps the menu alive and a <code style="font-family:var(--f-mono);color:var(--brass)">switch</code> routes the user's choice to the right method.</p>
+      <p class="act-sub">Program.cs &middot; Menu-Driven Launcher</p>
+      <p class="act-desc">All three activities in one program. Watch the full session play out &mdash; every menu option from 1 to 4, with <code style="font-family:var(--f-mono);color:var(--brass)">Console.Clear()</code> wiping the screen between each loop, exactly like the real program.</p>
     </div>
   </div>
-  <div class="stage">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab(this,'m-out')">Output</button>
-      <button class="tab" onclick="showTab(this,'m-code')">C# Source</button>
-      <button class="tab" onclick="showTab(this,'m-con')">Concept</button>
-    </div>
 
-    <div class="panel active" id="m-out">
+  <div class="stage">
+
+    <div class="block">
+      <div class="block-label"><span class="bl-num">01</span> Console Output</div>
       <div class="titlebar">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-        <span class="filename">Program.cs — Menu Launcher</span>
+        <span class="filename">Program.cs &mdash; Menu Launcher</span>
       </div>
       <div class="terminal-body" id="term4"></div>
       <div class="term-actions">
-        <button class="replay-btn" onclick="playTerminal('term4')">↻ Replay Output</button>
-        <span class="term-note">Green text = simulated user input</span>
+        <button class="replay-btn" onclick="playTerminal('term4')">&#8635; Replay</button>
+        <button class="replay-btn" onclick="skipTerminal('term4')">&#9193; Skip to end</button>
+        <span class="term-note">Full session: options 1 &rarr; 2 &rarr; 3 &rarr; 4. Green text is typed live.</span>
       </div>
     </div>
 
-    <div class="panel" id="m-code">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">02</span> C# Source Code</div>
       <div class="code-head">
         <span class="code-file">Program.cs</span>
         <button class="copy-btn" onclick="copyCode(this,'code4')">Copy</button>
       </div>
-      <pre class="code" id="code4"><span class="cl"><span class="k">using</span> System;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="k">static void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        <span class="k">bool</span> running = <span class="k">true</span>;</span><span class="cl"></span><span class="cl">        <span class="k">while</span> (running)</span><span class="cl">        {</span><span class="cl">            Console.Clear();</span><span class="cl">            Console.WriteLine(<span class="s">"========================================="</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"        C# PROGRAMMING ACTIVITIES        "</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"========================================="</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[1] Activity 1 - Display Personal Info (hardcoded)"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[2] Activity 2 - Variables and Multiplication"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[3] Activity 3 - Display Personal Info (user input)"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"[4] Exit"</span>);</span><span class="cl">            Console.WriteLine(<span class="s">"========================================="</span>);</span><span class="cl">            Console.Write(<span class="s">"Choose an option (1-4): "</span>);</span><span class="cl"></span><span class="cl">            <span class="k">string</span> choice = Console.ReadLine();</span><span class="cl">            Console.WriteLine();</span><span class="cl"></span><span class="cl">            <span class="k">switch</span> (choice)</span><span class="cl">            {</span><span class="cl">                <span class="k">case</span> <span class="s">"1"</span>: Activity1(); <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> <span class="s">"2"</span>: Activity2(); <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> <span class="s">"3"</span>: Activity3(); <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> <span class="s">"4"</span>:</span><span class="cl">                    running = <span class="k">false</span>;</span><span class="cl">                    Console.WriteLine(<span class="s">"Exiting program. Goodbye!"</span>);</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">                <span class="k">default</span>:</span><span class="cl">                    Console.WriteLine(<span class="s">"Invalid option. Please choose 1-4."</span>);</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">            }</span><span class="cl"></span><span class="cl">            <span class="k">if</span> (running)</span><span class="cl">            {</span><span class="cl">                Console.WriteLine(<span class="s">"\nPress any key to return to the menu..."</span>);</span><span class="cl">                Console.ReadKey();</span><span class="cl">            }</span><span class="cl">        }</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ACTIVITY 1: Display hardcoded personal information</span></span><span class="cl">    <span class="k">static void</span> <span class="t">Activity1</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"--- ACTIVITY 1: Personal Information ---"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: Gimbert Ludovice"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: Bachelor of Science in Information Technology Specialization in Mobile and Website Development"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: Biñan"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: Laguna"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: 10/13/2006"</span>);</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ACTIVITY 2: Declare 5 variables, multiply 2, display all</span></span><span class="cl">    <span class="k">static void</span> <span class="t">Activity2</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"--- ACTIVITY 2: Variables and Multiplication ---"</span>);</span><span class="cl"></span><span class="cl">        <span class="k">int</span> num1 = <span class="n">8</span>;</span><span class="cl">        <span class="k">int</span> num2 = <span class="n">5</span>;</span><span class="cl">        <span class="k">int</span> product = num1 * num2;</span><span class="cl">        <span class="k">string</span> studentName = <span class="s">"Gimbert Ludovice"</span>;</span><span class="cl">        <span class="k">string</span> course = <span class="s">"Bachelor of Science in Information Technology Specialization in Mobile and Website Development"</span>;</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"Variable 1 (num1): "</span> + num1);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 2 (num2): "</span> + num2);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 3 (product of num1 * num2): "</span> + product);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 4 (studentName): "</span> + studentName);</span><span class="cl">        Console.WriteLine(<span class="s">"Variable 5 (course): "</span> + course);</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ACTIVITY 3: Get personal information via user input</span></span><span class="cl">    <span class="k">static void</span> <span class="t">Activity3</span>()</span><span class="cl">    {</span><span class="cl">        Console.WriteLine(<span class="s">"--- ACTIVITY 3: Personal Information (User Input) ---"</span>);</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Fullname: "</span>);</span><span class="cl">        <span class="k">string</span> fullname = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Course with Specialization: "</span>);</span><span class="cl">        <span class="k">string</span> course = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Municipality: "</span>);</span><span class="cl">        <span class="k">string</span> municipality = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Province: "</span>);</span><span class="cl">        <span class="k">string</span> province = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.Write(<span class="s">"Enter Date of Birth (MM/DD/YYYY): "</span>);</span><span class="cl">        <span class="k">string</span> dob = Console.ReadLine();</span><span class="cl"></span><span class="cl">        Console.WriteLine(<span class="s">"\n--- Your Information ---"</span>);</span><span class="cl">        Console.WriteLine(<span class="s">"Fullname: "</span> + fullname);</span><span class="cl">        Console.WriteLine(<span class="s">"Course with Specialization: "</span> + course);</span><span class="cl">        Console.WriteLine(<span class="s">"Municipality: "</span> + municipality);</span><span class="cl">        Console.WriteLine(<span class="s">"Province: "</span> + province);</span><span class="cl">        Console.WriteLine(<span class="s">"Date of Birth: "</span> + dob);</span><span class="cl">    }</span><span class="cl">}</span></pre>
+      <pre class="code" id="code4"><span class="cl"><span class="k">using</span> System;</span><span class="cl"><span class="k">using</span> System.Threading;</span><span class="cl"></span><span class="cl"><span class="k">class</span> <span class="t">Program</span></span><span class="cl">{</span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="c">//  TYPEWRITER HELPERS</span></span><span class="cl">    <span class="c">//  These reproduce the auto-typing effect from the website.</span></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl"></span><span class="cl">    <span class="c">// Types text one character at a time, then moves to a new line.</span></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">TypeLine</span>(<span class="k">string</span> text, <span class="k">int</span> speed = <span class="n">18</span>)</span><span class="cl">    {</span><span class="cl">        <span class="t">Type</span>(text, speed);</span><span class="cl">        Console.WriteLine();</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// Types text one character at a time WITHOUT a line break,</span></span><span class="cl">    <span class="c">// so the cursor stays on the same line (used for input prompts).</span></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">Type</span>(<span class="k">string</span> text, <span class="k">int</span> speed = <span class="n">18</span>)</span><span class="cl">    {</span><span class="cl">        <span class="k">foreach</span> (<span class="k">char</span> c in text)</span><span class="cl">        {</span><span class="cl">            Console.Write(c);</span><span class="cl">            Thread.Sleep(speed);</span><span class="cl">        }</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// Types text in a highlight colour, then restores the default.</span></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">TypeLine</span>(<span class="k">string</span> text, ConsoleColor color, <span class="k">int</span> speed = <span class="n">18</span>)</span><span class="cl">    {</span><span class="cl">        ConsoleColor original = Console.ForegroundColor;</span><span class="cl">        Console.ForegroundColor = color;</span><span class="cl">        <span class="t">Type</span>(text, speed);</span><span class="cl">        Console.ForegroundColor = original;</span><span class="cl">        Console.WriteLine();</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// Prints a prompt with the typewriter effect, then reads user input.</span></span><span class="cl">    <span class="k">static</span> <span class="k">string</span> <span class="t">TypePrompt</span>(<span class="k">string</span> prompt, <span class="k">int</span> speed = <span class="n">18</span>)</span><span class="cl">    {</span><span class="cl">        <span class="t">Type</span>(prompt, speed);</span><span class="cl">        <span class="k">return</span> Console.ReadLine();</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">Main</span>()</span><span class="cl">    {</span><span class="cl">        Console.OutputEncoding = System.Text.Encoding.UTF8; <span class="c">// needed for &quot;ñ&quot; in Biñan</span></span><span class="cl">        <span class="k">bool</span> running = <span class="k">true</span>;</span><span class="cl"></span><span class="cl">        <span class="k">while</span> (running)</span><span class="cl">        {</span><span class="cl">            Console.Clear();</span><span class="cl">            <span class="t">TypeLine</span>(&quot;=========================================&quot;, ConsoleColor.DarkYellow, <span class="n">4</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;        C# PROGRAMMING ACTIVITIES        &quot;, ConsoleColor.Yellow, <span class="n">12</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;=========================================&quot;, ConsoleColor.DarkYellow, <span class="n">4</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;[<span class="n">1</span>] Activity <span class="n">1</span> - Display Personal Info (hardcoded)&quot;, <span class="n">8</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;[<span class="n">2</span>] Activity <span class="n">2</span> - Variables and Multiplication&quot;, <span class="n">8</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;[<span class="n">3</span>] Activity <span class="n">3</span> - Display Personal Info (user input)&quot;, <span class="n">8</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;[<span class="n">4</span>] Exit&quot;, <span class="n">8</span>);</span><span class="cl">            <span class="t">TypeLine</span>(&quot;=========================================&quot;, ConsoleColor.DarkYellow, <span class="n">4</span>);</span><span class="cl"></span><span class="cl">            <span class="k">string</span> choice = <span class="t">TypePrompt</span>(&quot;Choose an option (<span class="n">1</span>-<span class="n">4</span>): &quot;, <span class="n">12</span>);</span><span class="cl">            Console.WriteLine();</span><span class="cl"></span><span class="cl">            <span class="k">switch</span> (choice)</span><span class="cl">            {</span><span class="cl">                <span class="k">case</span> &quot;<span class="n">1</span>&quot;:</span><span class="cl">                    <span class="t">Activity1</span>();</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> &quot;<span class="n">2</span>&quot;:</span><span class="cl">                    <span class="t">Activity2</span>();</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> &quot;<span class="n">3</span>&quot;:</span><span class="cl">                    <span class="t">Activity3</span>();</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">                <span class="k">case</span> &quot;<span class="n">4</span>&quot;:</span><span class="cl">                    running = <span class="k">false</span>;</span><span class="cl">                    <span class="t">TypeLine</span>(&quot;Exiting program. Goodbye!&quot;, ConsoleColor.Cyan, <span class="n">25</span>);</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">                <span class="k">default</span>:</span><span class="cl">                    <span class="t">TypeLine</span>(&quot;Invalid option. Please choose <span class="n">1</span>-<span class="n">4</span>.&quot;, ConsoleColor.Red, <span class="n">15</span>);</span><span class="cl">                    <span class="k">break</span>;</span><span class="cl">            }</span><span class="cl"></span><span class="cl">            <span class="k">if</span> (running)</span><span class="cl">            {</span><span class="cl">                Console.WriteLine();</span><span class="cl">                <span class="t">TypeLine</span>(&quot;Press any key to <span class="k">return</span> to the menu...&quot;, ConsoleColor.DarkGray, <span class="n">10</span>);</span><span class="cl">                Console.ReadKey();</span><span class="cl">            }</span><span class="cl">        }</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="c">//  ACTIVITY 1: Display hardcoded personal information</span></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">Activity1</span>()</span><span class="cl">    {</span><span class="cl">        <span class="t">TypeLine</span>(&quot;--- ACTIVITY <span class="n">1</span>: Personal Information ---&quot;, ConsoleColor.Yellow, <span class="n">15</span>);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Fullname: Gimbert Ludovice&quot;);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Course with Specialization: Bachelor of Science in Information Technology Specialization in Mobile and Website Development&quot;);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Municipality: Biñan&quot;);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Province: Laguna&quot;);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Date of Birth: <span class="n">10</span>/<span class="n">13</span>/<span class="n">2006</span>&quot;);</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="c">//  ACTIVITY 2: Declare 5 variables, multiply 2, display all</span></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">Activity2</span>()</span><span class="cl">    {</span><span class="cl">        <span class="t">TypeLine</span>(&quot;--- ACTIVITY <span class="n">2</span>: Variables and Multiplication ---&quot;, ConsoleColor.Yellow, <span class="n">15</span>);</span><span class="cl"></span><span class="cl">        <span class="k">int</span> num1 = <span class="n">8</span>;</span><span class="cl">        <span class="k">int</span> num2 = <span class="n">5</span>;</span><span class="cl">        <span class="k">int</span> product = num1 * num2;</span><span class="cl">        <span class="k">string</span> studentName = &quot;Gimbert Ludovice&quot;;</span><span class="cl">        <span class="k">string</span> course = &quot;Bachelor of Science in Information Technology Specialization in Mobile and Website Development&quot;;</span><span class="cl"></span><span class="cl">        <span class="t">TypeLine</span>(&quot;Variable <span class="n">1</span> (num1): &quot; + num1);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Variable <span class="n">2</span> (num2): &quot; + num2);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Variable <span class="n">3</span> (product of num1 * num2): &quot; + product);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Variable <span class="n">4</span> (studentName): &quot; + studentName);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Variable <span class="n">5</span> (course): &quot; + course);</span><span class="cl">    }</span><span class="cl"></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="c">//  ACTIVITY 3: Get personal information via user input</span></span><span class="cl">    <span class="c">// ============================================================</span></span><span class="cl">    <span class="k">static</span> <span class="k">void</span> <span class="t">Activity3</span>()</span><span class="cl">    {</span><span class="cl">        <span class="t">TypeLine</span>(&quot;--- ACTIVITY <span class="n">3</span>: Personal Information (User Input) ---&quot;, ConsoleColor.Yellow, <span class="n">15</span>);</span><span class="cl"></span><span class="cl">        <span class="k">string</span> fullname     = <span class="t">TypePrompt</span>(&quot;Enter Fullname: &quot;);</span><span class="cl">        <span class="k">string</span> course       = <span class="t">TypePrompt</span>(&quot;Enter Course with Specialization: &quot;);</span><span class="cl">        <span class="k">string</span> municipality = <span class="t">TypePrompt</span>(&quot;Enter Municipality: &quot;);</span><span class="cl">        <span class="k">string</span> province     = <span class="t">TypePrompt</span>(&quot;Enter Province: &quot;);</span><span class="cl">        <span class="k">string</span> dob          = <span class="t">TypePrompt</span>(&quot;Enter Date of Birth (MM/DD/YYYY): &quot;);</span><span class="cl"></span><span class="cl">        Console.WriteLine();</span><span class="cl">        <span class="t">TypeLine</span>(&quot;--- Your Information ---&quot;, ConsoleColor.Yellow, <span class="n">15</span>);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Fullname: &quot; + fullname);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Course with Specialization: &quot; + course);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Municipality: &quot; + municipality);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Province: &quot; + province);</span><span class="cl">        <span class="t">TypeLine</span>(&quot;Date of Birth: &quot; + dob);</span><span class="cl">    }</span><span class="cl">}</span><span class="cl"></span></pre>
     </div>
 
-    <div class="panel" id="m-con">
+    <div class="block">
+      <div class="block-label"><span class="bl-num">03</span> Concepts Used</div>
       <div class="concept-box">
         <h4>While Loop</h4>
         <p>The menu repeats as long as <code>running</code> is true. Setting it to false on option 4 is what lets the loop finish and the program exit cleanly.</p>
@@ -583,50 +604,53 @@ pre.code .cl::before{counter-increment:ln;content:counter(ln);display:inline-blo
         <p>Activity1.cs, Activity2.cs, and Activity3.cs each declare their own <code>Main()</code>. Compiling them alongside Program.cs triggers error <code>CS0017</code>. Keep only Program.cs in the build and store the rest in a separate reference folder.</p>
       </div>
     </div>
+
   </div>
+
   <div class="act-footnav">
-    <a class="footnav-btn" onclick="goTo('a3')">← Activity 3</a>
-    <a class="footnav-btn" onclick="goTo('home')">Home →</a>
+    <a class="footnav-btn" onclick="goTo('a3')">&larr; Activity 3</a>
+    <a class="footnav-btn" onclick="goTo('home')">Home &rarr;</a>
   </div>
 </div>
 
 <script>
-const COURSE = "Bachelor of Science in Information Technology Specialization in Mobile and Website Development";
+const COURSE_FULL = "Bachelor of Science in Information Technology Specialization in Mobile and Website Development";
+const COURSE_A2   = "BS Information Technology Specialized in Mobile and Website Development";
 
 const terminals = {
   term1: [
-    {type:"cmd", text:"$ dotnet run --activity 1"},
-    {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
-    {type:"line", label:"Course with Specialization", value:COURSE},
-    {type:"line", label:"Municipality", value:"Biñan"},
-    {type:"line", label:"Province", value:"Laguna"},
-    {type:"line", label:"Date of Birth", value:"10/13/2006"},
+    {type:"cmd",  text:"$ dotnet run"},
+    {type:"line", label:"Fullname", value:"[Gimbert Ludovice]"},
+    {type:"line", label:"Course with Specialization", value:"["+COURSE_FULL+"]"},
+    {type:"line", label:"Municipality", value:"[Bi\u00f1an]"},
+    {type:"line", label:"Province", value:"[Laguna]"},
+    {type:"line", label:"Date of Birth", value:"[10/13/2006]"}
   ],
   term2: [
-    {type:"cmd", text:"$ dotnet run --activity 2"},
+    {type:"cmd",  text:"$ dotnet run"},
     {type:"line", label:"Variable 1 (num1)", value:"8"},
     {type:"line", label:"Variable 2 (num2)", value:"5"},
     {type:"line", label:"Variable 3 (product of num1 * num2)", value:"40"},
     {type:"line", label:"Variable 4 (studentName)", value:"Gimbert Ludovice"},
-    {type:"line", label:"Variable 5 (course)", value:COURSE},
+    {type:"line", label:"Variable 5 (course)", value:COURSE_A2}
   ],
   term3: [
-    {type:"cmd", text:"$ dotnet run --activity 3"},
+    {type:"cmd",   text:"$ dotnet run"},
     {type:"input", prompt:"Enter Fullname: ", typed:"Gimbert Ludovice"},
-    {type:"input", prompt:"Enter Course with Specialization: ", typed:COURSE},
-    {type:"input", prompt:"Enter Municipality: ", typed:"Biñan"},
+    {type:"input", prompt:"Enter Course with Specialization: ", typed:COURSE_FULL},
+    {type:"input", prompt:"Enter Municipality: ", typed:"Bi\u00f1an"},
     {type:"input", prompt:"Enter Province: ", typed:"Laguna"},
     {type:"input", prompt:"Enter Date of Birth (MM/DD/YYYY): ", typed:"10/13/2006"},
-    {type:"divider"},
-    {type:"cmd", text:"--- Your Information ---"},
+    {type:"blank"},
+    {type:"cmd",  text:"--- Your Information ---"},
     {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
-    {type:"line", label:"Course with Specialization", value:COURSE},
-    {type:"line", label:"Municipality", value:"Biñan"},
+    {type:"line", label:"Course with Specialization", value:COURSE_FULL},
+    {type:"line", label:"Municipality", value:"Bi\u00f1an"},
     {type:"line", label:"Province", value:"Laguna"},
-    {type:"line", label:"Date of Birth", value:"10/13/2006"},
+    {type:"line", label:"Date of Birth", value:"10/13/2006"}
   ],
   term4: [
-    {type:"cmd", text:"$ dotnet run"},
+    {type:"cmd",   text:"$ dotnet run"},
     {type:"plain", text:"========================================="},
     {type:"plain", text:"        C# PROGRAMMING ACTIVITIES        "},
     {type:"plain", text:"========================================="},
@@ -636,104 +660,267 @@ const terminals = {
     {type:"plain", text:"[4] Exit"},
     {type:"plain", text:"========================================="},
     {type:"input", prompt:"Choose an option (1-4): ", typed:"1"},
-    {type:"divider"},
-    {type:"cmd", text:"--- ACTIVITY 1: Personal Information ---"},
+    {type:"blank"},
+    {type:"cmd",  text:"--- ACTIVITY 1: Personal Information ---"},
     {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
-    {type:"line", label:"Course with Specialization", value:COURSE},
-    {type:"line", label:"Municipality", value:"Biñan"},
+    {type:"line", label:"Course with Specialization", value:COURSE_FULL},
+    {type:"line", label:"Municipality", value:"Bi\u00f1an"},
     {type:"line", label:"Province", value:"Laguna"},
     {type:"line", label:"Date of Birth", value:"10/13/2006"},
-    {type:"divider"},
-    {type:"plain", text:"Press any key to return to the menu..."},
-  ],
+    {type:"blank"},
+    {type:"dim",  text:"Press any key to return to the menu..."},
+    {type:"clear"},
+
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"        C# PROGRAMMING ACTIVITIES        "},
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"[1] Activity 1 - Display Personal Info (hardcoded)"},
+    {type:"plain", text:"[2] Activity 2 - Variables and Multiplication"},
+    {type:"plain", text:"[3] Activity 3 - Display Personal Info (user input)"},
+    {type:"plain", text:"[4] Exit"},
+    {type:"plain", text:"========================================="},
+    {type:"input", prompt:"Choose an option (1-4): ", typed:"2"},
+    {type:"blank"},
+    {type:"cmd",  text:"--- ACTIVITY 2: Variables and Multiplication ---"},
+    {type:"line", label:"Variable 1 (num1)", value:"8"},
+    {type:"line", label:"Variable 2 (num2)", value:"5"},
+    {type:"line", label:"Variable 3 (product of num1 * num2)", value:"40"},
+    {type:"line", label:"Variable 4 (studentName)", value:"Gimbert Ludovice"},
+    {type:"line", label:"Variable 5 (course)", value:COURSE_FULL},
+    {type:"blank"},
+    {type:"dim",  text:"Press any key to return to the menu..."},
+    {type:"clear"},
+
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"        C# PROGRAMMING ACTIVITIES        "},
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"[1] Activity 1 - Display Personal Info (hardcoded)"},
+    {type:"plain", text:"[2] Activity 2 - Variables and Multiplication"},
+    {type:"plain", text:"[3] Activity 3 - Display Personal Info (user input)"},
+    {type:"plain", text:"[4] Exit"},
+    {type:"plain", text:"========================================="},
+    {type:"input", prompt:"Choose an option (1-4): ", typed:"3"},
+    {type:"blank"},
+    {type:"cmd",   text:"--- ACTIVITY 3: Personal Information (User Input) ---"},
+    {type:"input", prompt:"Enter Fullname: ", typed:"Gimbert Ludovice"},
+    {type:"input", prompt:"Enter Course with Specialization: ", typed:COURSE_FULL},
+    {type:"input", prompt:"Enter Municipality: ", typed:"Bi\u00f1an"},
+    {type:"input", prompt:"Enter Province: ", typed:"Laguna"},
+    {type:"input", prompt:"Enter Date of Birth (MM/DD/YYYY): ", typed:"10/13/2006"},
+    {type:"blank"},
+    {type:"cmd",  text:"--- Your Information ---"},
+    {type:"line", label:"Fullname", value:"Gimbert Ludovice"},
+    {type:"line", label:"Course with Specialization", value:COURSE_FULL},
+    {type:"line", label:"Municipality", value:"Bi\u00f1an"},
+    {type:"line", label:"Province", value:"Laguna"},
+    {type:"line", label:"Date of Birth", value:"10/13/2006"},
+    {type:"blank"},
+    {type:"dim",  text:"Press any key to return to the menu..."},
+    {type:"clear"},
+
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"        C# PROGRAMMING ACTIVITIES        "},
+    {type:"plain", text:"========================================="},
+    {type:"plain", text:"[1] Activity 1 - Display Personal Info (hardcoded)"},
+    {type:"plain", text:"[2] Activity 2 - Variables and Multiplication"},
+    {type:"plain", text:"[3] Activity 3 - Display Personal Info (user input)"},
+    {type:"plain", text:"[4] Exit"},
+    {type:"plain", text:"========================================="},
+    {type:"input", prompt:"Choose an option (1-4): ", typed:"4"},
+    {type:"blank"},
+    {type:"exit",  text:"Exiting program. Goodbye!"}
+  ]
 };
+
+// terminals that type their user input character-by-character
+const TYPING = {term3:true, term4:true};
 
 function esc(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-function renderLine(item){
+function staticLine(item){
   if(item.type==="divider") return '<hr class="divider">';
-  if(item.type==="cmd") return '<div class="output-line prompt">'+esc(item.text)+'</div>';
-  if(item.type==="plain") return '<div class="output-line">'+esc(item.text)+'</div>';
-  if(item.type==="input") return '<div class="output-line">'+esc(item.prompt)+'<span class="typed">'+esc(item.typed)+'</span></div>';
+  if(item.type==="blank")   return '<div class="output-line">&nbsp;</div>';
+  if(item.type==="cmd")     return '<div class="output-line prompt">'+esc(item.text)+'</div>';
+  if(item.type==="dim")     return '<div class="output-line dim">'+esc(item.text)+'</div>';
+  if(item.type==="exit")    return '<div class="output-line exit">'+esc(item.text)+'</div>';
+  if(item.type==="clear")   return '<hr class="screenbreak">';
+  if(item.type==="plain")   return '<div class="output-line">'+esc(item.text)+'</div>';
+  if(item.type==="input")   return '<div class="output-line">'+esc(item.prompt)+'<span class="typed">'+esc(item.typed)+'</span></div>';
   return '<div class="output-line"><span class="label">'+esc(item.label)+':</span> <span class="value">'+esc(item.value)+'</span></div>';
 }
 
-function playTerminal(id){
-  const box=document.getElementById(id);
-  if(!box) return;
-  box.innerHTML="";
-  let delay=150;
+const timers = {};
+
+function clearTimers(id){
+  (timers[id]||[]).forEach(clearTimeout);
+  timers[id] = [];
+}
+function later(id, fn, ms){
+  timers[id] = timers[id] || [];
+  timers[id].push(setTimeout(fn, ms));
+}
+
+/* fade-in playback for non-typing terminals */
+function playFade(id){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+  let d = 150;
   terminals[id].forEach(item=>{
-    const w=document.createElement("div");
-    w.innerHTML=renderLine(item);
-    const el=w.firstElementChild;
-    if(el.classList.contains("output-line")) el.style.animationDelay=delay+"ms";
+    const w = document.createElement("div");
+    w.innerHTML = staticLine(item);
+    const el = w.firstElementChild;
+    if(el.classList.contains("output-line")) el.style.animationDelay = d+"ms";
     box.appendChild(el);
-    delay += item.type==="divider" ? 70 : 120;
+    d += (item.type==="divider"||item.type==="blank") ? 70 : 120;
   });
-  const c=document.createElement("span");
-  c.className="cursor";
+  const c = document.createElement("span");
+  c.className = "cursor";
   box.appendChild(c);
 }
 
-function showTab(btn,panelId){
-  const stage=btn.closest(".stage");
-  stage.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  stage.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
-  btn.classList.add("active");
-  document.getElementById(panelId).classList.add("active");
+/* auto-typing playback: prompts appear, then input is typed out */
+function playTyping(id){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+  const items = terminals[id];
+  let idx = 0;
+
+  function next(){
+    if(idx >= items.length){
+      const c = document.createElement("span");
+      c.className = "cursor";
+      box.appendChild(c);
+      return;
+    }
+    const item = items[idx++];
+
+    if(item.type === "input"){
+      const line = document.createElement("div");
+      line.className = "output-line";
+      line.style.opacity = 1;
+      line.style.animation = "none";
+      line.textContent = item.prompt;
+      const typed = document.createElement("span");
+      typed.className = "typed";
+      line.appendChild(typed);
+      const caret = document.createElement("span");
+      caret.className = "caret";
+      line.appendChild(caret);
+      box.appendChild(line);
+
+      const text = item.typed;
+      let i = 0;
+      function typeChar(){
+        if(i < text.length){
+          typed.textContent += text.charAt(i++);
+          later(id, typeChar, 22 + Math.random()*28);
+        } else {
+          caret.remove();
+          later(id, next, 420);
+        }
+      }
+      later(id, typeChar, 260);
+    } else if(item.type === "clear"){
+      later(id, ()=>{
+        box.innerHTML = "";
+        const note = document.createElement("div");
+        note.className = "output-line dim";
+        note.style.opacity = 1;
+        note.style.animation = "none";
+        note.textContent = "[Console.Clear() \u2014 screen wiped, menu redrawn]";
+        box.appendChild(note);
+        later(id, ()=>{ box.innerHTML = ""; next(); }, 700);
+      }, 900);
+    } else {
+      const w = document.createElement("div");
+      w.innerHTML = staticLine(item);
+      const el = w.firstElementChild;
+      if(el.classList.contains("output-line")) el.style.animationDelay = "0ms";
+      box.appendChild(el);
+      later(id, next, (item.type==="divider"||item.type==="blank") ? 90 : 130);
+    }
+  }
+  next();
 }
 
-function copyCode(btn,codeId){
-  const text=document.getElementById(codeId).innerText;
+function playTerminal(id){
+  const box = document.getElementById(id);
+  if(!box) return;
+  clearTimers(id);
+  if(TYPING[id]) playTyping(id); else playFade(id);
+}
+
+/* render everything instantly, no animation */
+function skipTerminal(id){
+  const box = document.getElementById(id);
+  if(!box) return;
+  clearTimers(id);
+  let items = terminals[id];
+  // Console.Clear() wipes the screen, so only render what survives the last clear
+  const lastClear = items.map(x=>x.type).lastIndexOf("clear");
+  if(lastClear > -1) items = items.slice(lastClear+1);
+  box.innerHTML = items.map(item=>{
+    const html = staticLine(item);
+    return html.replace(/class="output-line([^"]*)"/g,'class="output-line$1" style="opacity:1;animation:none"');
+  }).join("");
+  const c = document.createElement("span");
+  c.className = "cursor";
+  box.appendChild(c);
+}
+
+function copyCode(btn, codeId){
+  const text = document.getElementById(codeId).innerText;
   navigator.clipboard.writeText(text).then(()=>{
-    btn.textContent="✓ Copied";
+    btn.textContent = "\u2713 Copied";
     btn.classList.add("done");
-    setTimeout(()=>{btn.textContent="Copy";btn.classList.remove("done");},1800);
+    setTimeout(()=>{btn.textContent="Copy"; btn.classList.remove("done");}, 1800);
   }).catch(()=>{
-    btn.textContent="Press Ctrl+C";
-    setTimeout(()=>{btn.textContent="Copy";},1800);
+    btn.textContent = "Press Ctrl+C";
+    setTimeout(()=>{btn.textContent="Copy";}, 1800);
   });
 }
 
-const termFor={a1:"term1",a2:"term2",a3:"term3",menu:"term4"};
+const termFor = {a1:"term1", a2:"term2", a3:"term3", menu:"term4"};
 
 function goTo(key){
+  Object.keys(timers).forEach(clearTimers);
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  const target=document.getElementById("page-"+key);
+  const target = document.getElementById("page-"+key);
   if(!target) return;
   target.classList.add("active");
   document.querySelectorAll("[data-nav]").forEach(b=>{
-    b.classList.toggle("current", b.dataset.nav===key);
+    b.classList.toggle("current", b.dataset.nav === key);
   });
-  document.getElementById("mainNav").classList.remove("open");
+  const nav = document.getElementById("mainNav");
+  if(nav) nav.classList.remove("open");
   window.scrollTo(0,0);
   if(termFor[key]) playTerminal(termFor[key]);
-  history.replaceState(null,"","#"+key);
+  history.replaceState(null, "", "#"+key);
 }
 
-window.addEventListener("scroll",()=>{
-  const h=document.documentElement;
-  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
-  document.getElementById("progress").style.width=(pct||0)+"%";
+window.addEventListener("scroll", ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  const bar = document.getElementById("progress");
+  if(bar) bar.style.width = (pct||0) + "%";
 });
 
-document.addEventListener("keydown",e=>{
-  if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA") return;
-  const order=["home","a1","a2","a3","menu"];
-  const cur=(location.hash.replace("#","")||"home");
-  const i=order.indexOf(cur);
-  if(i<0) return;
-  if(e.key==="ArrowRight"&&i<order.length-1) goTo(order[i+1]);
-  if(e.key==="ArrowLeft"&&i>0) goTo(order[i-1]);
+document.addEventListener("keydown", e=>{
+  if(e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+  const order = ["home","a1","a2","a3","menu"];
+  const cur = (location.hash.replace("#","") || "home");
+  const i = order.indexOf(cur);
+  if(i < 0) return;
+  if(e.key === "ArrowRight" && i < order.length-1) goTo(order[i+1]);
+  if(e.key === "ArrowLeft"  && i > 0)              goTo(order[i-1]);
 });
 
-window.addEventListener("DOMContentLoaded",()=>{
-  const valid=["home","a1","a2","a3","menu"];
-  const h=location.hash.replace("#","");
-  goTo(valid.includes(h)?h:"home");
+window.addEventListener("DOMContentLoaded", ()=>{
+  const valid = ["home","a1","a2","a3","menu"];
+  const h = location.hash.replace("#","");
+  goTo(valid.includes(h) ? h : "home");
 });
 </script>
 
